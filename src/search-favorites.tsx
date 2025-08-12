@@ -14,7 +14,11 @@ export default function Command() {
   }, []);
 
   function removeFromFavorites(id: string) {
-    setFavorites((prev) => prev.filter((fav) => fav !== id));
+     setFavorites((prev) => {
+      const updated = prev.filter((fav) => fav !== id);
+      LocalStorage.setItem("favorites", JSON.stringify(updated));
+      return updated;
+    });
   }
 
   return (

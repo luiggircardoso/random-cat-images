@@ -44,9 +44,13 @@ export default function Command() {
     if (data && data.length > 0) {
       const favoritesString = await LocalStorage.getItem<string>("favorites");
       const favorites = favoritesString ? JSON.parse(favoritesString) : [];
-      favorites.push(data[0].id);
-      await LocalStorage.setItem("favorites", JSON.stringify(favorites));
-      showToast({ title: "Added to Favorites", message: "Cat image has been added to your favorites." });
+      if (!favorites.includes(data[0].id)) {
+        favorites.push(data[0].id);
+        await LocalStorage.setItem("favorites", JSON.stringify(favorites));
+        showToast({ title: "Added to Favorites", message: "Cat image has been added to your favorites." });
+      } else {
+        showFailureToast("Cat image is already in favorites.");
+      }
     }
   }
 
