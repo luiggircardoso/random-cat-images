@@ -1,4 +1,4 @@
-import { List, ActionPanel, Action, Clipboard, Icon, LocalStorage, showToast } from "@raycast/api"; 
+import { List, ActionPanel, Action, Icon, LocalStorage, showToast } from "@raycast/api";
 import { useFetch, showFailureToast } from "@raycast/utils";
 import { useState, useEffect } from "react";
 import breeds from "./lib/breeds";
@@ -19,10 +19,10 @@ export default function Command() {
   const { isLoading, data, revalidate, error } = useFetch<CatImage[]>(apiUrl);
 
   const content = error
-  ? `# Error\n${error.message}`
-  : !isLoading && data && data.length > 0
-    ? `![](${data[0].url}?raycast-height=325)`
-    : "# Loading...";
+    ? `# Error\n${error.message}`
+    : !isLoading && data && data.length > 0
+      ? `![](${data[0].url}?raycast-height=325)`
+      : "# Loading...";
 
   const setContent = (id: string | null) => {
     if (id === "random") {
@@ -32,7 +32,7 @@ export default function Command() {
       setCurrentBreed(id);
       revalidate();
     }
-  }
+  };
 
   useEffect(() => {
     if (error) {
@@ -50,12 +50,6 @@ export default function Command() {
     }
   }
 
-  function copyCurrentImage() {
-    if (data && data.length > 0) {
-      Clipboard.copy(data[0].url);
-    }
-  }
-
   return (
     <List
       isShowingDetail={true}
@@ -63,33 +57,67 @@ export default function Command() {
       isLoading={isLoading}
       onSelectionChange={(id: string | null) => setContent(id)}
     >
-       <List.Item
+      <List.Item
         id="random"
         title="Random"
         detail={<List.Item.Detail markdown={content} />}
         actions={
           <ActionPanel>
-            <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
-            <Action title="Re-roll" icon={Icon.Repeat} onAction={revalidate} />
-            <Action title="Add to Favorites" shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }} icon={Icon.Star} onAction={addToFavorites} />
+            <Action.CopyToClipboard 
+              title="Copy Image URL" 
+              content={data && data[0]?.url ? data[0].url : ""} 
+            />
+            <Action 
+              title="Re-Roll" 
+              icon={Icon.Repeat} 
+              onAction={revalidate} 
+            />
+            <Action.OpenInBrowser 
+              title="Open in Browser" 
+              icon={Icon.Window} 
+              url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""} 
+            />
+            <Action
+              title="Add to Favorites"
+              shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }}
+              icon={Icon.Star}
+              onAction={addToFavorites}
+            />
           </ActionPanel>
         }
       />
-       {breeds.map(({ id, name }) => (
+      {breeds.map(({ id, name }) => (
         <List.Item
           key={id}
           id={id}
           title={name}
           detail={<List.Item.Detail markdown={content} />}
           actions={
-          <ActionPanel>
-            <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
-            <Action title="Re-roll" icon={Icon.Repeat} onAction={revalidate} />
-            <Action title="Add to Favorites" shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }} icon={Icon.Star} onAction={addToFavorites} />
-          </ActionPanel>
-        } 
+            <ActionPanel>
+              <Action.CopyToClipboard 
+                title="Copy Image URL" 
+                content={data && data[0]?.url ? data[0].url : ""} 
+              />
+              <Action 
+                title="Re-Roll" 
+                icon={Icon.Repeat} 
+                onAction={revalidate} 
+              />
+              <Action.OpenInBrowser 
+                title="Open in Browser" 
+                icon={Icon.Window} 
+                url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""} 
+              />
+              <Action
+                title="Add to Favorites"
+                shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }}
+                icon={Icon.Star}
+                onAction={addToFavorites}
+              />
+            </ActionPanel>
+          }
         />
-        ))}
+      ))}
     </List>
-  )
+  );
 }

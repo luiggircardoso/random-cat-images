@@ -18,9 +18,7 @@ export default function Command() {
   }
 
   return (
-    <Grid
-      columns={5}
-    >
+    <Grid columns={5}>
       {favorites.map((id: string) => (
         <Grid.Item
           key={id}
@@ -29,6 +27,7 @@ export default function Command() {
           actions={
             <ActionPanel>
               <Action.CopyToClipboard title="Copy Image URL" content={`https://cdn2.thecatapi.com/images/${id}.jpg`} />
+              <Action.OpenInBrowser title="Open in Browser" icon={Icon.Window} url={`https://cdn2.thecatapi.com/images/${id}.jpg`} />
               <Action title="Remove from Favorites" icon={Icon.Trash} onAction={() => removeFromFavorites(id)} />
             </ActionPanel>
           }
