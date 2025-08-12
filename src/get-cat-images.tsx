@@ -63,19 +63,12 @@ export default function Command() {
         detail={<List.Item.Detail markdown={content} />}
         actions={
           <ActionPanel>
-            <Action.CopyToClipboard 
-              title="Copy Image URL" 
-              content={data && data[0]?.url ? data[0].url : ""} 
-            />
-            <Action 
-              title="Re-Roll" 
-              icon={Icon.Repeat} 
-              onAction={revalidate} 
-            />
-            <Action.OpenInBrowser 
-              title="Open in Browser" 
-              icon={Icon.Window} 
-              url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""} 
+            <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
+            <Action title="Re-Roll" icon={Icon.Repeat} onAction={revalidate} />
+            <Action.OpenInBrowser
+              title="Open in Browser"
+              icon={Icon.Window}
+              url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""}
             />
             <Action
               title="Add to Favorites"
@@ -94,19 +87,12 @@ export default function Command() {
           detail={<List.Item.Detail markdown={content} />}
           actions={
             <ActionPanel>
-              <Action.CopyToClipboard 
-                title="Copy Image URL" 
-                content={data && data[0]?.url ? data[0].url : ""} 
-              />
-              <Action 
-                title="Re-Roll" 
-                icon={Icon.Repeat} 
-                onAction={revalidate} 
-              />
-              <Action.OpenInBrowser 
-                title="Open in Browser" 
-                icon={Icon.Window} 
-                url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""} 
+              <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
+              <Action title="Re-Roll" icon={Icon.Repeat} onAction={revalidate} />
+              <Action.OpenInBrowser
+                title="Open in Browser"
+                icon={Icon.Window}
+                url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""}
               />
               <Action
                 title="Add to Favorites"
