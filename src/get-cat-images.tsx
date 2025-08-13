@@ -4,6 +4,7 @@ import { List, ActionPanel, Action, Icon, LocalStorage, showToast } from "@rayca
 import { useFetch, showFailureToast } from "@raycast/utils";
 
 import breeds from "./lib/breeds";
+import { useFavorites } from "./lib/useFavorites";
 
 export interface CatImage {
   url: string;
@@ -13,6 +14,7 @@ export interface CatImage {
 
 export default function Command() {
   const [currentBreed, setCurrentBreed] = useState<string | null>(null);
+  const [favorites, setFavorites] = useFavorites();
 
   const apiUrl =
     currentBreed && currentBreed !== "random"
@@ -44,20 +46,11 @@ export default function Command() {
 
   async function addToFavorites() {
     if (data && data.length > 0) {
-      const favoritesString = await LocalStorage.getItem<string>("favorites");
-      let favorites: string[] = [];
-      if (favoritesString) {
-        try {
-          favorites = JSON.parse(favoritesString);
-        } catch (error) {
-          showFailureToast("Couldn't fetch favorites.");
-          console.error("Favorites JSON parse error:", error);
-          favorites = [];
-        }
-      }
-      if (!favorites.includes(data[0].id)) {
-        favorites.push(data[0].id);
-        await LocalStorage.setItem("favorites", JSON.stringify(favorites));
+      const id = data[0].id;
+      if (!favorites.includes(id)) {
+        const updated = [...favorites, id];
+        await LocalStorage.setItem("favorites", JSON.stringify(updated));
+        setFavorites(updated);
         showToast({ title: "Added to Favorites", message: "Cat image has been added to your favorites." });
       } else {
         showFailureToast("Cat image is already in favorites.");
@@ -73,7 +66,7 @@ export default function Command() {
         <Action.OpenInBrowser
           title="Open in Browser"
           icon={Icon.Window}
-          url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""}
+          url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${encodeURIComponent(data[0].id)}.jpg` : ""}
         />
         <Action
           title="Add to Favorites"

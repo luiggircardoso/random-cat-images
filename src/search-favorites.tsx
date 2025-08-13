@@ -3,32 +3,17 @@ import { useEffect, useState } from "react";
 import { LocalStorage, Grid, Action, ActionPanel, Icon } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 
-const linkURL = (id: string) => `https://cdn2.thecatapi.com/images/${id}.jpg`;
+import { useFavorites } from "./lib/useFavorites";
+
+const linkURL = (id: string) => `https://cdn2.thecatapi.com/images/${encodeURIComponent(id)}.jpg`;
 
 export default function Command() {
-  const [favorites, setFavorites] = useState<string[]>([]);
-
-  useEffect(() => {
-    async function fetchFavorites() {
-      const stored = await LocalStorage.getItem("favorites");
-      const favoritesString = typeof stored === "string" ? stored : "[]";
-      try {
-        setFavorites(JSON.parse(favoritesString));
-      } catch (e) {
-        setFavorites([]);
-        console.error("Failed to parse favorites from local storage:", e);
-        showFailureToast("Failed to load favorites");
-      }
-    }
-    fetchFavorites();
-  }, []);
+  const [favorites, setFavorites] = useFavorites();
 
   function removeFromFavorites(id: string) {
-    setFavorites((prev) => {
-      const updated = prev.filter((fav) => fav !== id);
-      LocalStorage.setItem("favorites", JSON.stringify(updated));
-      return updated;
-    });
+    const updated = favorites.filter((fav) => fav !== id);
+    LocalStorage.setItem("favorites", JSON.stringify(updated));
+    setFavorites(updated);
   }
 
   return (
