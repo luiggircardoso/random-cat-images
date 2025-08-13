@@ -57,23 +57,23 @@ export default function Command() {
   }
 
   function Actions() {
-    return(
+    return (
       <ActionPanel>
-            <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
-            <Action title="Re-Roll" icon={Icon.Repeat} onAction={revalidate} />
-            <Action.OpenInBrowser
-              title="Open in Browser"
-              icon={Icon.Window}
-              url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""}
-            />
-            <Action
-              title="Add to Favorites"
-              shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }}
-              icon={Icon.Star}
-              onAction={addToFavorites}
-            />
-          </ActionPanel>
-    )
+        <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
+        <Action title="Re-Roll" icon={Icon.Repeat} onAction={revalidate} />
+        <Action.OpenInBrowser
+          title="Open in Browser"
+          icon={Icon.Window}
+          url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""}
+        />
+        <Action
+          title="Add to Favorites"
+          shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }}
+          icon={Icon.Star}
+          onAction={addToFavorites}
+        />
+      </ActionPanel>
+    );
   }
 
   return (
@@ -83,20 +83,9 @@ export default function Command() {
       isLoading={isLoading}
       onSelectionChange={(id: string | null) => setContent(id)}
     >
-      <List.Item
-        id="random"
-        title="Random"
-        detail={<List.Item.Detail markdown={content} />}
-        actions={Actions()}          
-      />
+      <List.Item id="random" title="Random" detail={<List.Item.Detail markdown={content} />} actions={Actions()} />
       {breeds.map(({ id, name }) => (
-        <List.Item
-          key={id}
-          id={id}
-          title={name}
-          detail={<List.Item.Detail markdown={content} />}
-          actions={Actions()}
-        />
+        <List.Item key={id} id={id} title={name} detail={<List.Item.Detail markdown={content} />} actions={Actions()} />
       ))}
     </List>
   );
