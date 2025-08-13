@@ -46,15 +46,8 @@ export default function Command() {
             content={linkURL(id)}
             actions={
               <ActionPanel>
-                <Action.CopyToClipboard
-                  title="Copy Image URL"
-                  content={linkURL(id)}
-                />
-                <Action.OpenInBrowser
-                  title="Open in Browser"
-                  icon={Icon.Window}
-                  url={linkURL(id)}
-                />
+                <Action.CopyToClipboard title="Copy Image URL" content={linkURL(id)} />
+                <Action.OpenInBrowser title="Open in Browser" icon={Icon.Window} url={linkURL(id)} />
                 <Action title="Remove from Favorites" icon={Icon.Trash} onAction={() => removeFromFavorites(id)} />
               </ActionPanel>
             }
