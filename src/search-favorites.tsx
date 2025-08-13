@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+
 import { LocalStorage, Grid, Action, ActionPanel, Icon } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 
 const linkURL = (id: string) => `https://cdn2.thecatapi.com/images/${id}.jpg`;
 
-import { useEffect, useState } from "react";
 export default function Command() {
   const [favorites, setFavorites] = useState<string[]>([]);
 

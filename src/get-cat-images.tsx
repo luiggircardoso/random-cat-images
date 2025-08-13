@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
+
 import { List, ActionPanel, Action, Icon, LocalStorage, showToast } from "@raycast/api";
 import { useFetch, showFailureToast } from "@raycast/utils";
-import { useState, useEffect } from "react";
+
 import breeds from "./lib/breeds";
 
 export interface CatImage {
@@ -54,19 +56,9 @@ export default function Command() {
     }
   }
 
-  return (
-    <List
-      isShowingDetail={true}
-      searchBarPlaceholder="Search Cats..."
-      isLoading={isLoading}
-      onSelectionChange={(id: string | null) => setContent(id)}
-    >
-      <List.Item
-        id="random"
-        title="Random"
-        detail={<List.Item.Detail markdown={content} />}
-        actions={
-          <ActionPanel>
+  function Actions() {
+    return(
+      <ActionPanel>
             <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
             <Action title="Re-Roll" icon={Icon.Repeat} onAction={revalidate} />
             <Action.OpenInBrowser
@@ -81,7 +73,21 @@ export default function Command() {
               onAction={addToFavorites}
             />
           </ActionPanel>
-        }
+    )
+  }
+
+  return (
+    <List
+      isShowingDetail={true}
+      searchBarPlaceholder="Search Cats..."
+      isLoading={isLoading}
+      onSelectionChange={(id: string | null) => setContent(id)}
+    >
+      <List.Item
+        id="random"
+        title="Random"
+        detail={<List.Item.Detail markdown={content} />}
+        actions={Actions()}          
       />
       {breeds.map(({ id, name }) => (
         <List.Item
@@ -89,23 +95,7 @@ export default function Command() {
           id={id}
           title={name}
           detail={<List.Item.Detail markdown={content} />}
-          actions={
-            <ActionPanel>
-              <Action.CopyToClipboard title="Copy Image URL" content={data && data[0]?.url ? data[0].url : ""} />
-              <Action title="Re-Roll" icon={Icon.Repeat} onAction={revalidate} />
-              <Action.OpenInBrowser
-                title="Open in Browser"
-                icon={Icon.Window}
-                url={data && data[0]?.id ? `https://cdn2.thecatapi.com/images/${data[0].id}.jpg` : ""}
-              />
-              <Action
-                title="Add to Favorites"
-                shortcut={{ macOS: { modifiers: ["cmd"], key: "f" }, windows: { modifiers: ["ctrl"], key: "f" } }}
-                icon={Icon.Star}
-                onAction={addToFavorites}
-              />
-            </ActionPanel>
-          }
+          actions={Actions()}
         />
       ))}
     </List>

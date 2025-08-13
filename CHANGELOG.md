@@ -1,6 +1,6 @@
 # Get Cat Images Changelog
 
-## [Initial Version] - {PR_MERGE_DATE}
+## [v1.0] - {PR_MERGE_DATE}
 
 - Added the main commands
 - Added the Copy functionality
