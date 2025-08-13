@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-
 import { LocalStorage, Grid, Action, ActionPanel, Icon } from "@raycast/api";
-import { showFailureToast } from "@raycast/utils";
 
 import { useFavorites } from "./lib/useFavorites";
 
