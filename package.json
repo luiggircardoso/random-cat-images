@@ -8,14 +8,13 @@
   "license": "MIT",
   "categories": [
     "Fun",
-    "Media",
-    "Other"
+    "Media"
   ],
   "commands": [
     {
       "name": "get-cat-images",
       "title": "Get Cat Images",
-      "description": "Say hello. This is a sample command!",
+      "description": "Fetch a random cat image and add it to your favorites.",
       "mode": "view"
     },
     {

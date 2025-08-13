@@ -1,7 +1,5 @@
 # Get Cat Images
 
-![](/image.png)
-
 An extension where you can find cute cats from various breeds and share them with friends!
 
 ## Features:
@@ -13,4 +11,4 @@ An extension where you can find cute cats from various breeds and share them wit
 ## Credits
 
 [TheCatAPI](https://thecatapi.com/) - Being the piece holding this project together
-@bonikosoi - Testing and taking the screenshots
+`@bonikosoi` - Testing and taking the screenshots
