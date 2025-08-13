@@ -47,9 +47,10 @@ export default function Command() {
   async function addToFavorites() {
     if (data && data.length > 0) {
       const id = data[0].id;
-      if (!favorites.includes(id)) {
-        const updated = [...favorites, id];
-        await LocalStorage.setItem("favorites", JSON.stringify(updated));
+      if (!favorites.has(id)) {
+        const updated = new Set(favorites);
+        updated.add(id);
+        await LocalStorage.setItem("favorites", JSON.stringify(Array.from(updated)));
         setFavorites(updated);
         showToast({ title: "Added to Favorites", message: "Cat image has been added to your favorites." });
       } else {

@@ -11,21 +11,21 @@ export default function Command() {
   const [favorites, setFavorites] = useFavorites();
 
   function removeFromFavorites(id: string) {
-    const updated = favorites.filter((fav) => fav !== id);
-    LocalStorage.setItem("favorites", JSON.stringify(updated));
+    const updated = new Set(Array.from(favorites).filter((fav) => fav !== id));
+    LocalStorage.setItem("favorites", JSON.stringify(Array.from(updated)));
     setFavorites(updated);
   }
 
   return (
     <Grid columns={5}>
-      {favorites.length === 0 ? (
+      {favorites.size === 0 ? (
         <Grid.EmptyView
           title="No Favorites Yet"
           description="Add some cat images to your favorites to see them here!"
           icon={Icon.Star}
         />
       ) : (
-        favorites.map((id: string) => (
+        Array.from(favorites).map((id: string) => (
           <Grid.Item
             key={id}
             id={id}
