@@ -13,4 +13,5 @@ An extension where you can find cute cats from various breeds and share them wit
 [TheCatAPI](https://thecatapi.com/) - Being the piece holding this project together
 
 `@bonikosoi` - Testing and taking the screenshots
+
 [JoshBashed](https://github.com/joshbashed) - Code feedback and tips
