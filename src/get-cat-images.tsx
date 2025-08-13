@@ -45,7 +45,16 @@ export default function Command() {
   async function addToFavorites() {
     if (data && data.length > 0) {
       const favoritesString = await LocalStorage.getItem<string>("favorites");
-      const favorites = favoritesString ? JSON.parse(favoritesString) : [];
+      let favorites: string[] = [];
+      if (favoritesString) {
+        try {
+          favorites = JSON.parse(favoritesString);
+        } catch (error) {
+          showFailureToast("Couldn't fetch favorites.");
+          console.error("Favorites JSON parse error:", error);
+          favorites = [];
+        }
+      }
       if (!favorites.includes(data[0].id)) {
         favorites.push(data[0].id);
         await LocalStorage.setItem("favorites", JSON.stringify(favorites));
