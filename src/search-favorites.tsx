@@ -1,4 +1,4 @@
-import { LocalStorage, Grid, Action, ActionPanel, Icon } from "@raycast/api";
+import { Grid, Action, ActionPanel, Icon } from "@raycast/api";
 
 import { useFavorites } from "./lib/useFavorites";
 

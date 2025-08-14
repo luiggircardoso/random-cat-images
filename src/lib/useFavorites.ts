@@ -9,7 +9,6 @@ export function useFavorites(): [
   (id: string) => Promise<void>,
 ] {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
-  const [loading, setLoading] = useState(true);
 
   const isLoaded = useRef(false);
 
