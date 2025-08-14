@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { List, ActionPanel, Action, Icon, LocalStorage, showToast } from "@raycast/api";
+import { List, ActionPanel, Action, Icon } from "@raycast/api";
 import { useFetch, showFailureToast } from "@raycast/utils";
 
 import breeds from "./lib/breeds";
@@ -14,7 +14,7 @@ export interface CatImage {
 
 export default function Command() {
   const [currentBreed, setCurrentBreed] = useState<string | null>(null);
-  const [favorites, setFavorites, saveFavorite] = useFavorites(); // favorites is a Set<string>
+  const [, , saveFavorite] = useFavorites();
 
   const apiUrl =
     currentBreed && currentBreed !== "random"
