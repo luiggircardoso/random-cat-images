@@ -14,11 +14,11 @@ export interface CatImage {
 
 export default function Command() {
   const [currentBreed, setCurrentBreed] = useState<string | null>(null);
-  const [favorites, setFavorites] = useFavorites();
+  const [favorites, setFavorites, saveFavorite] = useFavorites(); // favorites is a Set<string>
 
   const apiUrl =
     currentBreed && currentBreed !== "random"
-      ? `https://api.thecatapi.com/v1/images/search?breed_ids=${currentBreed}`
+      ? `https://api.thecatapi.com/v1/images/search?breed_ids=${encodeURIComponent(currentBreed)}`
       : "https://api.thecatapi.com/v1/images/search";
   const { isLoading, data, revalidate, error } = useFetch<CatImage[]>(apiUrl);
 
@@ -45,17 +45,8 @@ export default function Command() {
   }, [error]);
 
   async function addToFavorites() {
-    if (data && data.length > 0) {
-      const id = data[0].id;
-      if (!favorites.has(id)) {
-        const updated = new Set(favorites);
-        updated.add(id);
-        await LocalStorage.setItem("favorites", JSON.stringify(Array.from(updated)));
-        setFavorites(updated);
-        showToast({ title: "Added to Favorites", message: "Cat image has been added to your favorites." });
-      } else {
-        showFailureToast("Cat image is already in favorites.");
-      }
+    if (data && data[0] && typeof saveFavorite === "function") {
+      await saveFavorite(data[0].id);
     }
   }
 
