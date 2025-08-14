@@ -46,6 +46,11 @@ export default function Command() {
 
   async function addToFavorites() {
     if (data && data[0] && typeof saveFavorite === "function") {
+      const url = data[0].url;
+      if (url && url.toLowerCase().endsWith(".gif")) {
+        showFailureToast("GIFs can't be favorited", { title: "GIF Detected" });
+        return;
+      }
       await saveFavorite(data[0].id);
     }
   }
