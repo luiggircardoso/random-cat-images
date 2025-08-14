@@ -2,7 +2,12 @@ import { useEffect, useState, useRef } from "react";
 import { LocalStorage, showToast } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
 
-export function useFavorites(): [Set<string>, (favorites: Set<string>) => void, (id: string) => Promise<void>, (id: string) => Promise<void>] {
+export function useFavorites(): [
+  Set<string>,
+  (favorites: Set<string>) => void,
+  (id: string) => Promise<void>,
+  (id: string) => Promise<void>,
+] {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
 
